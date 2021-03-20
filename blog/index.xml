@@ -6,13 +6,28 @@
     <description>Recent content in Blog on Blackdiz&#39;s Garage</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-TW</language>
-    <lastBuildDate>Tue, 01 Dec 2020 23:10:57 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 20 Mar 2021 22:20:55 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LeetCode 19. Remove Nth Node From End of List</title>
+      <link>https://blackdiz.github.io/blog/leetcode-19/</link>
+      <pubDate>Sat, 20 Mar 2021 22:20:55 +0800</pubDate>
+      
+      <guid>https://blackdiz.github.io/blog/leetcode-19/</guid>
+      <description>LeetCode 19. Remove Nth Node From End of List Medium
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+Follow up: Could you do this in one pass?
+Example 1:
+Input: head = [1,2,3,4,5], n = 2 Output: [1,2,3,5] Example 2:
+Input: head = [1], n = 1 Output: [] Example 3:
+Input: head = [1,2], n = 1 Output: [1] Constraints:</description>
+    </item>
+    
     <item>
       <title>LeetCode 1. Two Sum</title>
-      <link>https://blackdiz.github.io/blog/two-sum/</link>
+      <link>https://blackdiz.github.io/blog/leetcode-1/</link>
       <pubDate>Tue, 01 Dec 2020 23:10:57 +0800</pubDate>
       
-      <guid>https://blackdiz.github.io/blog/two-sum/</guid>
+      <guid>https://blackdiz.github.io/blog/leetcode-1/</guid>
       <description>LeetCode 1. Two Sum Easy
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.

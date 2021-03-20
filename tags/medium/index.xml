@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>medium on Blackdiz&#39;s Garage</title>
+    <link>https://blackdiz.github.io/tags/medium/</link>
+    <description>Recent content in medium on Blackdiz&#39;s Garage</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-TW</language>
+    <lastBuildDate>Sat, 20 Mar 2021 22:20:55 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/tags/medium/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LeetCode 19. Remove Nth Node From End of List</title>
+      <link>https://blackdiz.github.io/blog/leetcode-19/</link>
+      <pubDate>Sat, 20 Mar 2021 22:20:55 +0800</pubDate>
+      
+      <guid>https://blackdiz.github.io/blog/leetcode-19/</guid>
+      <description>LeetCode 19. Remove Nth Node From End of List Medium
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+Follow up: Could you do this in one pass?
+Example 1:
+Input: head = [1,2,3,4,5], n = 2 Output: [1,2,3,5] Example 2:
+Input: head = [1], n = 1 Output: [] Example 3:
+Input: head = [1,2], n = 1 Output: [1] Constraints:</description>
+    </item>
+    
+  </channel>
+</rss>
