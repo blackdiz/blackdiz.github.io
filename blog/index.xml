@@ -1,39 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Blog on Blackdiz&#39;s Garage</title>
-    <link>https://blackdiz.github.io/blog/</link>
-    <description>Recent content in Blog on Blackdiz&#39;s Garage</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-TW</language>
-    <lastBuildDate>Sat, 20 Mar 2021 22:20:55 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>LeetCode 19. Remove Nth Node From End of List</title>
-      <link>https://blackdiz.github.io/blog/leetcode-19/</link>
-      <pubDate>Sat, 20 Mar 2021 22:20:55 +0800</pubDate>
-      
-      <guid>https://blackdiz.github.io/blog/leetcode-19/</guid>
-      <description>LeetCode 19. Remove Nth Node From End of List Medium
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Blackdiz's Garage</title><link>https://blackdiz.github.io/blog/</link><description>Recent content in Blog on Blackdiz's Garage</description><generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Sat, 20 Mar 2021 22:20:55 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>LeetCode 19. Remove Nth Node From End of List</title><link>https://blackdiz.github.io/blog/leetcode-19/</link><pubDate>Sat, 20 Mar 2021 22:20:55 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-19/</guid><description>LeetCode 19. Remove Nth Node From End of List Medium
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
 Follow up: Could you do this in one pass?
 Example 1:
 Input: head = [1,2,3,4,5], n = 2 Output: [1,2,3,5] Example 2:
 Input: head = [1], n = 1 Output: [] Example 3:
-Input: head = [1,2], n = 1 Output: [1] Constraints:</description>
-    </item>
-    
-    <item>
-      <title>LeetCode 1. Two Sum</title>
-      <link>https://blackdiz.github.io/blog/leetcode-1/</link>
-      <pubDate>Tue, 01 Dec 2020 23:10:57 +0800</pubDate>
-      
-      <guid>https://blackdiz.github.io/blog/leetcode-1/</guid>
-      <description>LeetCode 1. Two Sum Easy
+Input: head = [1,2], n = 1 Output: [1] Constraints:</description></item><item><title>LeetCode 1. Two Sum</title><link>https://blackdiz.github.io/blog/leetcode-1/</link><pubDate>Tue, 01 Dec 2020 23:10:57 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-1/</guid><description>LeetCode 1. Two Sum Easy
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 Example:
-Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1]. 解決方法 1 直覺的話就是暴力解法，用所有元素組合兩兩相加直到找出加總等於 target 為止。</description>
-    </item>
-    
-  </channel>
-</rss>
+Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1]. 解決方法 1 直覺的話就是暴力解法，用所有元素組合兩兩相加直到找出加總等於 target 為止。</description></item></channel></rss>
