@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>leetcode on Blackdiz's Garage</title><link>https://blackdiz.github.io/tags/leetcode/</link><description>Recent content in leetcode on Blackdiz's Garage</description><generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Fri, 04 Jun 2021 07:23:28 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/tags/leetcode/index.xml" rel="self" type="application/rss+xml"/><item><title>LeetCode 55 . Jump Game</title><link>https://blackdiz.github.io/blog/leetcode-55/</link><pubDate>Fri, 04 Jun 2021 07:23:28 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-55/</guid><description>LeetCode 55. Jump Game Medium
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>leetcode on Blackdiz's Garage</title><link>https://blackdiz.github.io/tags/leetcode/</link><description>Recent content in leetcode on Blackdiz's Garage</description><generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Wed, 09 Jun 2021 01:14:14 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/tags/leetcode/index.xml" rel="self" type="application/rss+xml"/><item><title>Leetcode 104. Maximum Depth of Binary Tree</title><link>https://blackdiz.github.io/blog/leetcode-104/</link><pubDate>Wed, 09 Jun 2021 01:14:14 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-104/</guid><description>LeetCode 104. Maximum Depth of Binary Tree Easy
+題目 Given a binary tree, find its maximum depth.
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+Note: A leaf is a node with no children.
+Example:
+Given binary tree [3,9,20,null,null,15,7],
+3 / \ 9 20 / \ 15 7 return its depth = 3.
+解決方法 1 (My Own Solution) 我們用 2 個變數分別記錄目前所在的層數和目前到過的最大層數，每到一層時如果目前所在的層數大於到過的最大層數就更新最大層數。</description></item><item><title>LeetCode 55. Jump Game</title><link>https://blackdiz.github.io/blog/leetcode-55/</link><pubDate>Fri, 04 Jun 2021 07:23:28 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-55/</guid><description>LeetCode 55. Jump Game Medium
 Given an array of non-negative integers nums, you are initially positioned at the first index of the array.
 Each element in the array represents your maximum jump length at that position.
 Determine if you are able to reach the last index.
