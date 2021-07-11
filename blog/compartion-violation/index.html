@@ -44,7 +44,7 @@
     <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>this</span><span style=color:#f92672>.</span><span style=color:#a6e22e>val</span><span style=color:#f92672>.</span><span style=color:#a6e22e>compareTo</span><span style=color:#f92672>(</span>e<span style=color:#f92672>.</span><span style=color:#a6e22e>val</span><span style=color:#f92672>);</span>
 <span style=color:#f92672>}</span>
 
-</code></pre></div><p>當看到印出來的訊息時，突然間謎題全部都解開了(請下 BGM)</p><p><img src=../../img/blog/buster.jpg alt title=我就是想用到這張圖></p><p>最終抓到的問題資料是 <code>8</code>、<code>19</code>、<code>5Z</code>(為保護機密，此資料非實際當事資料)，這三個值有什麼問題呢? 我們來分別套用到排序邏輯上看看。
+</code></pre></div><p>當看到印出來的訊息時，突然間謎題全部都解開了(請下 BGM)</p><p><img src=../../img/blog/buster.jpg alt></p><p style=font-size:.7em align=center>我就是想用到這張圖</p><p>最終抓到的問題資料是 <code>8</code>、<code>19</code>、<code>5Z</code>(為保護機密，此資料非實際當事資料)，這三個值有什麼問題呢? 我們來分別套用到排序邏輯上看看。
 首先是 <code>8</code> 和 <code>19</code>，這兩個字串都是純數字，所以我們會轉成 <code>int</code> 後比較大小，得到 <code>8 &lt; 19</code>。
 接著是 <code>8</code> 和 <code>5Z</code>，<code>5Z</code> 是字串，因此我們會用 <code>"8".compareTo("5Z")</code> 的方式比大小，在 Java 中字串的排序是從最前面的字元開始比較它轉成 Unicode 後的數值，而 <code>"8" > "5"</code> 所以得到 <code>8 > 5Z</code>。
 最後是 <code>5Z</code> 和 <code>19</code>，同樣的這裡用字串的方式排序，因為 <code>"5" > "1"</code> 所以得到 <code>5Z > 19</code>。
