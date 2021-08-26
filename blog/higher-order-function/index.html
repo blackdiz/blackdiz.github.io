@@ -1,166 +1,569 @@
-<!doctype html><html lang=zh-tw><head><meta charset=utf-8><title>Higher Order Function 小記 - Blackdiz's Garage</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=google-site-verification content="Dz97mIdDkadVEVU8hmTHqjtAcIFza455i8wijgkzBYA"><meta name=generator content="Hugo 0.83.1"><meta property="og:site_name" content="Blackdiz's Garage"><meta property="og:title" content="Higher Order Function 小記"><meta property="og:description" content="充滿各種小雜記的小車庫"><meta property="description" content="充滿各種小雜記的小車庫"><meta property="og:url" content="https://blackdiz.github.io/blog/higher-order-function/"><meta property="og:type" content="article"><meta property="og:image" content="https://blackdiz.github.io/img/main/logo.jpg"><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/atom-one-dark.min.css><link rel=stylesheet href=/css/bundle.min.2b4e36cd6a81be0237f8d8f3ce0d239eb39d356f5e3b6c33140b8108476a2beb.css integrity="sha256-K042zWqBvgI3+Njzzg0jnrOdNW9eO2wzFAuBCEdqK+s="><link rel=stylesheet href=/css/add-on.css></head><body><header id=site-header><nav id=site-nav><h1 class=nav-title><a href=/ class=nav>部落格</a></h1><menu id=site-nav-menu class="flyout-menu menu"><a href=/ class="nav link"><i class="fa fa-home"></i> Home</a>
-<a href=/blog/ class="nav link"><i class="far fa-newspaper"></i> Blog</a>
-<a href=/categories/ class="nav link"><i class="fas fa-sitemap"></i> Categories</a>
-<a href=/about/ class="nav link"><i class="far fa-id-card"></i> About</a>
-<a href=#share-menu class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
-<a href=#search-input class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a></menu>
-<a href=#search-input class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
-<a href=#share-menu class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
-<a href=#lang-menu class="nav lang-toggle" lang=zh-tw>zh-tw</a>
-<a href=#site-nav class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a></nav><menu id=search class=menu><input id=search-input class="search-input menu"></input><div id=search-results class="search-results menu"></div></menu><menu id=lang-menu class="flyout-menu menu"><a href=# lang=zh-tw class="nav link active">中文 (zh-tw)</a></menu>
-<menu id=share-menu class="flyout-menu menu"><h1>Share Post</h1></menu></header><div id=wrapper><section id=site-intro><a href=/><img src=https://blackdiz.github.io/img/main/logo.jpg class=circle width=100 alt="Hugo Future Imperfect Slim"></a><header><h1>Blackdiz's Garage</h1></header><main><p>心得、筆記、雜記</p></main><footer><ul class=socnet-icons><li><a href=//github.com/blackdiz target=_blank rel=noopener title=GitHub class="fab fa-github"></a></li><li><a href=mailto:blackdiz@gmail.com target=_blank title=Email class="far fa-envelope"></a></li></ul></footer></section><main id=site-main><article><div class=post><header><div class=title><h2><a href=/blog/higher-order-function/>Higher Order Function 小記</a></h2></div><div class=meta><time datetime="2021-08-14 22:33:38 +0800 +0800">August 14, 2021</time><p>4 分鐘</p></div></header><div id=socnet-share></div><div class=content><p>在 <strong>Functional Programming</strong> (函式程式設計) 的世界中，function (函式) 本身可以接受另一個 function 的做為參數，或是返回一個 function 做為回傳值，這就是所謂 <strong>Higher Order Function</strong>。</p><p>以 JavaScript 為例，比方我們想在每次執行 function 時附帶執行 1 個 function，我們可以把要附帶執行的 function 做為參數傳入：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>f</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>function</span>() {
-    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>&#34;I&#39;m callback&#34;</span>);
+<!doctype html>
+<html lang="zh-tw">
+  <head>
+  <meta charset="utf-8">
+<title>Higher Order Function 小記 - Blackdiz&#39;s Garage</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.87.0" /><meta property="og:site_name" content="Blackdiz&#39;s Garage">
+  <meta property="og:title" content="Higher Order Function 小記">
+  <meta property="og:description" content="充滿各種小雜記的小車庫">
+  <meta property="description" content="充滿各種小雜記的小車庫">
+  <meta property="og:url" content="https://blackdiz.github.io/blog/higher-order-function/">
+  <meta property="og:type" content="article">
+  
+    <meta property="og:image" content="https://blackdiz.github.io/img/main/logo.jpg">
+  
+  
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/atom-one-dark.min.css">
+          <link rel="stylesheet" href="/css/bundle.min.1bfccf86359e3de974865922b006112447a52f942c2a9c2bf93d159980ae641b.css" integrity="sha256-G/zPhjWePel0hlkisAYRJEelL5QsKpwr&#43;T0VmYCuZBs="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          部落格
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#lang-menu" class="nav lang-toggle" lang="zh-tw">zh-tw</a>
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  <menu id="lang-menu" class="flyout-menu menu">
+  <a href="#" lang="zh-tw" class="nav link active">中文 (zh-tw)</a>
+  
+    
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+        <a href="mailto:?subject=%e6%9f%a5%e7%9c%8b%e6%ad%a4%e5%b8%96%e5%ad%90%e7%9a%84%e4%bd%9c%e8%80%85 %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fblackdiz.github.io%2fblog%2fhigher-order-function%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://blackdiz.github.io/img/main/logo.jpg" class="circle" width="100" alt="Hugo Future Imperfect Slim" /></a>
+  <header>
+    <h1>Blackdiz's Garage</h1>
+  </header>
+  <main>
+    <p>心得、筆記、雜記</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/blackdiz" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:blackdiz@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/higher-order-function/">Higher Order Function 小記</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time datetime="2021-08-14 22:35:07 &#43;0800 &#43;0800">August 14, 2021</time>
+    
+    <p>4 分鐘</p>
+  </div>
+</header>
+
+    <div id="socnet-share">
+      
+
+
+
+
+  
+        <a href="mailto:?subject=%e6%9f%a5%e7%9c%8b%e6%ad%a4%e5%b8%96%e5%ad%90%e7%9a%84%e4%bd%9c%e8%80%85 %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fblackdiz.github.io%2fblog%2fhigher-order-function%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </div>
+    <div class="content">
+      
+      <h1 id="higher-order-function-小記">Higher Order Function 小記</h1>
+<p>在 Functional Programming (FP 函數向導向) 的世界中，function (函數) 本身可以接受另一個 function 的做為參數並返回 function，這就是所謂 <strong>Higher Order Function</strong>。</p>
+<p>以 JavaScript 為例，比方我們想在每次執行 function 時附帶執行 1 個 function，我們可以把要附帶執行的 function 做為參數傳入：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">c</span>() {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;I&#39;m callback&#34;</span>);
 }
 
-<span style=color:#75715e>// 這裡 callback function 做為參數傳入
-</span><span style=color:#75715e></span><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>add</span>(<span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>callback</span>) {
-    <span style=color:#75715e>// 所以我們可以在 a + b 之前執行傳入的 function
-</span><span style=color:#75715e></span>    <span style=color:#a6e22e>callback</span>();
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>a</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>b</span>
+<span style="color:#75715e">// 這裡 callback function 做為參數傳入
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">callback</span>) {
+    <span style="color:#75715e">// 所以我們可以在 a + b 之前執行傳入的 function
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">callback</span>();
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>
 }
 
-<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>sum</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>add</span>(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>4</span>, <span style=color:#a6e22e>f</span>);
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>sum</span>);
-</code></pre></div><p>會印出：</p><pre><code>I'm callback
-7
-</code></pre><p>另一方面我們也可以回傳 function，這裡的 <code>addThree()</code> 回傳一個 function 是接受一個參數 <code>x</code> 回傳 <code>x + 3</code>，所以 <code>sum(4)</code>，會得到 <code>7</code>：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>addThree</span>() {
-    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>x</span>) {
-        <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>3</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">sum</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">add</span>(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#a6e22e">f</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">sum</span>);
+</code></pre></div><p>會印出：</p>
+<pre><code>7
+I'm callback
+</code></pre><p>另一方面我們也可以回傳 function，這裡的 <code>addThree()</code> 回傳一個 function 是接受一個參數 <code>x</code> 回傳 <code>x + 3</code>，所以 <code>sum(4)</code>，會得到 <code>7</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addThree</span>() {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">x</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>;
     }
 }
 
-<span style=color:#75715e>/*
-</span><span style=color:#75715e> * sum = function (x) {
-</span><span style=color:#75715e> *   return x + 3;
-</span><span style=color:#75715e> * }
-</span><span style=color:#75715e> */</span>
-<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>sum</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>addThree</span>();
-</code></pre></div><p>因此會印出：</p><pre><code>7
-</code></pre><h2 id=應用>應用</h2><p>在 FP 的世界中，我們可以把 function 用 Higher Order Function 做組合，所以我們可以把常見的<strong>執行流程</strong>抽象成 function，把<strong>執行邏輯</strong>做為 function 傳入。常見的有 <code>forEach</code>、<code>map</code>、<code>filter</code>、<code>reduce</code> 等流程 function。</p><h3 id=foreach>forEach</h3><p>我們很常在程式中做的流程之一就是用迴圈對一連串資料比方 Array 或 List 中的元素一個個進行操作，所以這個迴圈流程就可以抽象成一個 function，而執行的流程很簡單：對傳入的一連串資料中 (比方 Array 或 List) 的一個個元素對其執行傳入的 function：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>print</span>(<span style=color:#a6e22e>x</span>) {
-    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>x</span>);
+<span style="color:#75715e">/*
+</span><span style="color:#75715e"> * sum = function (x) {
+</span><span style="color:#75715e"> *   return x + 3;
+</span><span style="color:#75715e"> * }
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">sum</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addThree</span>();
+</code></pre></div><p>因此會印出：</p>
+<pre><code>7
+</code></pre><h2 id="應用">應用</h2>
+<p>在 FP 的世界中，我們可以把 function 用 Higher Order Function 做組合，所以我們可以把常見的<strong>執行流程</strong>抽象成 function，把<strong>執行邏輯</strong>做為 function 傳入。常見的有 <code>forEach</code>、<code>map</code>、<code>filter</code>、<code>reduce</code> 等流程 function。</p>
+<h3 id="foreach">forEach</h3>
+<p>我們很常在程式中做的流程之一就是用迴圈對一連串資料比方 Array 或 List 中的元素一個個進行操作，所以這個迴圈流程就可以抽象成一個 function，而執行的流程很簡單：對傳入的一連串資料中 (比方 Array 或 List) 的一個個元素對其執行傳入的 function：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">print</span>(<span style="color:#a6e22e">x</span>) {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">x</span>);
 }
 
-[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>print</span>(<span style=color:#a6e22e>i</span>));
-</code></pre></div><p>上面的程式中會分別對 Array 中的 <code>1</code>、<code>2</code>﹑<code>3</code> 分別執行 <code>print</code> function 所以會印出：</p><pre><code>1
+[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">print</span>(<span style="color:#a6e22e">i</span>));
+</code></pre></div><p>上面的程式中會分別對 Array 中的 <code>1</code>、<code>2</code>﹑<code>3</code> 分別執行 <code>print</code> function 所以會印出：</p>
+<pre><code>1
 2
 3
-</code></pre><p>而通常我們可以傳入一個 anonymous function (匿名函式)，也就是不用先宣告好 function 直接傳入 function，所以我們可以把上面的程式改寫成：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#75715e>// anonymous function 可以不用宣告名字
-</span><span style=color:#75715e></span>[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>forEach</span>(<span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>i</span>) {
-    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>i</span>);
+</code></pre><p>而通常我們可以傳入一個 anonymous function (匿名函數)，也就是不用先宣告好 function 直接傳入 function，所以我們可以把上面的程式改寫成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// anonymous function 可以不用宣告名字
+</span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">i</span>) {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">i</span>);
 });
 
-<span style=color:#75715e>// 在 JavaScript 中可以用 arrow function (箭頭函式) 讓程式更簡潔
-</span><span style=color:#75715e></span>[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>i</span>));
-</code></pre></div><h3 id=map>map</h3><p>如果今天我們傳入的 function 是想要把資料操作後再回傳，比方我們想把 <code>[1, 2, 3]</code> 中的元素每個都乘上 3，我們可以用 <code>forEach</code> 來完成：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#75715e>// 用來儲存乘 3 後的結果
-</span><span style=color:#75715e></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>newArray</span> <span style=color:#f92672>=</span> [];
-[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; {
-    <span style=color:#a6e22e>newArray</span>.<span style=color:#a6e22e>push</span>(<span style=color:#a6e22e>i</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span>)
+<span style="color:#75715e">// 在 JavaScript 中可以用 arrow function (箭頭函數) 讓程式更簡潔
+</span><span style="color:#75715e"></span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">i</span>));
+</code></pre></div><h3 id="map">map</h3>
+<p>如果今天我們傳入的 function 是想要把資料操作後再回傳，比方我們想把 <code>[1, 2, 3]</code> 中的元素每個都乘上 3，我們可以用 <code>forEach</code> 來完成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// 用來儲存乘 3 後的結果
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">newArray</span> <span style="color:#f92672">=</span> [];
+[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; {
+    <span style="color:#a6e22e">newArray</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>)
 });
 
-<span style=color:#a6e22e>newArray</span>.<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>i</span>));
-</code></pre></div><p>這樣會印出：</p><pre><code>3
+<span style="color:#a6e22e">newArray</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">i</span>));
+</code></pre></div><p>這樣會印出：</p>
+<pre><code>3
 6
 9
-</code></pre><p>但因為這種操作其實也很常見，所以就有 <code>map</code> 這個 function，其執行流程為：對元素執行傳入的 function 並<code>回傳</code>執行後的新元素的列表 (以 JavaScript 來說是 Array )。</p><p>因此上面 <code>forEach</code> 版本可以改寫成：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#75715e>/* 因為 map 回傳的是執行後的新元素的 Array ，所以我們可以不用另外建立新的 Array 來儲存。
-</span><span style=color:#75715e> * 另外因為在 arrow function 中如果只有一行程式比方下面 i * 3，則可以不用 {} 包住，且預設會回傳執行後的
-</span><span style=color:#75715e> * 結果，所以下面的程式相同於：
-</span><span style=color:#75715e> * let newArray = [1, 2, 3].map((i) {
-</span><span style=color:#75715e> *    return i * 3
-</span><span style=color:#75715e> * });
-</span><span style=color:#75715e> */</span>
-<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>newArray</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>map</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>i</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span>);
+</code></pre><p>但因為這種操作其實也很常見，所以就有 <code>map</code> 這個 function，其執行流程為：對元素執行傳入的 function 並<code>回傳</code>執行後的新元素的列表 (以 JavaScript 來說是 Array )。</p>
+<p>因此上面 <code>forEach</code> 版本可以改寫成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">/* 因為 map 回傳的是執行後的新元素的 Array ，所以我們可以不用另外建立新的 Array 來儲存。
+</span><span style="color:#75715e"> * 另外因為在 arrow function 中如果只有一行程式比方下面 i * 3，則可以不用 {} 包住，且預設會回傳執行後的
+</span><span style="color:#75715e"> * 結果，所以下面的程式相同於：
+</span><span style="color:#75715e"> * let newArray = [1, 2, 3].map((i) {
+</span><span style="color:#75715e"> *    return i * 3
+</span><span style="color:#75715e"> * });
+</span><span style="color:#75715e"> */</span>
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">newArray</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">map</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>);
 
-<span style=color:#a6e22e>newArray</span>.<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>i</span>));
-</code></pre></div><h3 id=filter>filter</h3><p>另一個很常見的邏輯是，我們需要過濾元素，比方我們想要過濾掉 <code>[1, 2, 3]</code> 中比 2 小的元素，如果用 <code>forEach</code> 的話可以寫成：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>newArray</span> <span style=color:#f92672>=</span> [];
+<span style="color:#a6e22e">newArray</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">i</span>));
+</code></pre></div><h3 id="filter">filter</h3>
+<p>另一個很常見的邏輯是，我們需要過濾元素，比方我們想要過濾掉 <code>[1, 2, 3]</code> 中比 2 小的元素，如果用 <code>forEach</code> 的話可以寫成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">newArray</span> <span style="color:#f92672">=</span> [];
 
-[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; {
-    <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>i</span> <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>1</span>) {
-        <span style=color:#a6e22e>newArray</span>.<span style=color:#a6e22e>push</span>(<span style=color:#a6e22e>i</span>);
+[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+        <span style="color:#a6e22e">newArray</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">i</span>);
     }
 });
 
-<span style=color:#a6e22e>newArray</span>.<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>i</span>));
-</code></pre></div><p>這樣會印出：</p><pre><code>2
+<span style="color:#a6e22e">newArray</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">i</span>));
+</code></pre></div><p>這樣會印出：</p>
+<pre><code>2
 3
 </code></pre><p>但我們可以用 <code>filter</code> 改寫，<code>filter</code> 的執行邏輯是：傳入一個 function，該 function 對元素執行後回傳的是 <code>true</code> 或 <code>false</code>，根據回傳的值，如果是 <code>true</code> 就放入回傳的列表中，如果是 <code>false</code> 就略過。
-比方上面的程式我們可以改寫成：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>newArray</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>filter</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>i</span> <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>1</span>);
+比方上面的程式我們可以改寫成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">newArray</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">filter</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>);
 
-<span style=color:#a6e22e>newArray</span>.<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>i</span>));
-</code></pre></div><h3 id=reduce>reduce</h3><p>有時候我們會想對操作完的元素再做統整的處理，比方我們想對 <code>[1, 2, 3]</code> 的每個數字乘 3 後再全部加總，如果用 <code>forEach</code> 的寫法會是：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>sum</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-[<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>forEach</span>((<span style=color:#a6e22e>i</span>) =&gt; {
-    <span style=color:#a6e22e>i</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span>;
-    <span style=color:#a6e22e>sum</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>sum</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>i</span>;
+<span style="color:#a6e22e">newArray</span>.<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">i</span>));
+</code></pre></div><h3 id="reduce">reduce</h3>
+<p>有時候我們會想對操作完的元素再做統整的處理，比方我們想對 <code>[1, 2, 3]</code> 的每個數字乘 3 後再全部加總，如果用 <code>forEach</code> 的寫法會是：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">sum</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">forEach</span>((<span style="color:#a6e22e">i</span>) =&gt; {
+    <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>;
+    <span style="color:#a6e22e">sum</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">sum</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">i</span>;
 });
 
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>sum</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">sum</span>);
 </code></pre></div><p>這樣會印出 <code>18</code>。
-而這個操作可以用 <code>reduce</code> 取代，<code>reduce</code> 我感覺是比之前的幾個 function 複雜，也比較難用文字描述，MDN 上的 <code>reduce</code> 的說明是：</p><blockquote><p>reduce() 方法將一個累加器及 Array 中每項元素（由左至右）傳入回呼函式，將 Array 化為單一值。</p></blockquote><p>基本上我覺得光看文字應該是看不懂在說什麼，所以我們直接透過 API 說明搭配上面的例子來解釋可能比較清楚。
-<code>reduce</code> 的 API 是</p><blockquote><p>arr.reduce(callback[accumulator, currentValue, currentIndex, array], initialValue)</p></blockquote><p>接下來我們個別套到上面的例子中來看，首先 <code>arr</code> 就是目標要操作的 Array ，在這裡是 <code>[1, 2, 3]</code>，這應該沒什麼問題。</p><p>接下來 <code>reduce</code> 的參數就比較複雜，先說 <code>initialValue</code>，<code>initialValue</code> 指的是初始值，也就是當 <code>callback</code> 第一次執行時可以傳入 <code>initialValue</code> 使用。所以如果應用到上面的例子的話，我們的目的是想把每個元素加到 <code>sum</code>，而 <code>sum</code> 一開始是 <code>0</code>，因此我們可以傳入 0 做為 <code>initialValue</code></p><p>而 <code>callback</code> 是針對元素要執行的 function，所以在這邊我們的 <code>callback</code> 中要對每個元素乘 3 而 <code>callback</code> 本身能接受的參數有：</p><ul><li><code>accumulator</code>：這是指累加值，每次針對一個元素執行完 <code>callback</code> 後會把回傳值傳入下次執行 <code>callback</code> 時的 <code>accumulator</code>，而在第一次執行時如果有傳入 <code>initialValue</code> 的話就會是 <code>initialValue</code> 的值。在我們的例子中，我們想把每個元素加到 <code>sum</code> 中，所以我們將 0 做為 <code>initialValue</code> 傳入，而在每次加完元素後的總和就會做為 <code>accumulator</code> 傳入下次 <code>callback</code> 的執行</li><li><code>currentValue</code>：這是指執行 <code>callback</code> 當下時的目標元素，在這個例子中第一次執行為就會是 <code>1</code>，第二次會是 <code>2</code></li><li><code>currentIndex</code>：執行 <code>callback</code> 當下時目標元素的 index，在這個例子中第一次執行為就會是 <code>0</code>，第二次會是 <code>1</code>，可以不傳入，在我們的例子不需要使用</li><li><code>array</code>：呼叫 <code>reduce</code> 的 Array ，在這個例子中為 <code>[1, 2, 3]</code>，可以不傳入，在我們的例子用不到</li></ul><p>所以這樣套完後，我們可以用 <code>reduce</code> 改寫成：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>total</span> <span style=color:#f92672>=</span> [<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>].<span style=color:#a6e22e>reduce</span>((<span style=color:#a6e22e>sum</span>, <span style=color:#a6e22e>i</span>) =&gt; {
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>sum</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>i</span>;
-}, <span style=color:#ae81ff>0</span>);
+而這個操作可以用 <code>reduce</code> 取代，<code>reduce</code> 我感覺是比之前的幾個 function 複雜，也比較難用文字描述，MDN 上的 <code>reduce</code> 的說明是：</p>
+<blockquote>
+<p>reduce() 方法將一個累加器及 Array 中每項元素（由左至右）傳入回呼函式，將 Array 化為單一值。</p>
+</blockquote>
+<p>基本上我覺得光看文字應該是看不懂在說什麼，所以我們直接透過 API 說明搭配上面的例子來解釋可能比較清楚。
+<code>reduce</code> 的 API 是</p>
+<blockquote>
+<p>arr.reduce(callback[accumulator, currentValue, currentIndex, array], initialValue)</p>
+</blockquote>
+<p>接下來我們個別套到上面的例子中來看，首先 <code>arr</code> 就是目標要操作的 Array ，在這裡是 <code>[1, 2, 3]</code>，這應該沒什麼問題。</p>
+<p>接下來 <code>reduce</code> 的參數就比較複雜，先說 <code>initialValue</code>，<code>initialValue</code> 指的是初始值，也就是當 <code>callback</code> 第一次執行時可以傳入 <code>initialValue</code> 使用。所以如果應用到上面的例子的話，我們的目的是想把每個元素加到 <code>sum</code>，而 <code>sum</code> 一開始是 <code>0</code>，因此我們可以傳入 0 做為 <code>initialValue</code></p>
+<p>而 <code>callback</code> 是針對元素要執行的 function，所以在這邊我們的 <code>callback</code> 中要對每個元素乘 3 而 <code>callback</code> 本身能接受的參數有：</p>
+<ul>
+<li><code>accumulator</code>：這是指累加值，每次針對一個元素執行完 <code>callback</code> 後會把回傳值傳入下次執行 <code>callback</code> 時的 <code>accumulator</code>，而在第一次執行時如果有傳入 <code>initialValue</code> 的話就會是 <code>initialValue</code> 的值。在我們的例子中，我們想把每個元素加到 <code>sum</code> 中，所以我們將 0 做為 <code>initialValue</code> 傳入，而在每次加完元素後的總和就會做為 <code>accumulator</code> 傳入下次 <code>callback</code> 的執行</li>
+<li><code>currentValue</code>：這是指執行 <code>callback</code> 當下時的目標元素，在這個例子中第一次執行為就會是 <code>1</code>，第二次會是 <code>2</code></li>
+<li><code>currentIndex</code>：執行 <code>callback</code> 當下時目標元素的 index，在這個例子中第一次執行為就會是 <code>0</code>，第二次會是 <code>1</code>，可以不傳入，在我們的例子不需要使用</li>
+<li><code>array</code>：呼叫 <code>reduce</code> 的 Array ，在這個例子中為 <code>[1, 2, 3]</code>，可以不傳入，在我們的例子用不到</li>
+</ul>
+<p>所以這樣套完後，我們可以用 <code>reduce</code> 改寫成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">total</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>].<span style="color:#a6e22e">reduce</span>((<span style="color:#a6e22e">sum</span>, <span style="color:#a6e22e">i</span>) =&gt; {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">i</span>;
+}, <span style="color:#ae81ff">0</span>);
 
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>total</span>);
-</code></pre></div><p>我們可以把 <code>callback</code> 執行過程拆開來看會更清楚，第一次執行 <code>callback</code> 時會執行像是這樣的 function：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>1</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>;
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">total</span>);
+</code></pre></div><p>我們可以把 <code>callback</code> 執行過程拆開來看會更清楚，第一次執行 <code>callback</code> 時會執行像是這樣的 function：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
 }
-</code></pre></div><p>0 是我們傳入的 <code>initialValue</code> 因為是第一次執行所以會變成 <code>callback</code> 的第一個參數 <code>accumulator</code>，而 1 就是當下處理的元素。</p><p>第二次執行時會把第一次執行的回傳值 1 做為 <code>accumulator</code> 傳入 <code>callback</code>，所以第二次的 function 會是：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span>(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>;
+</code></pre></div><p>0 是我們傳入的 <code>initialValue</code> 因為是第一次執行所以會變成 <code>callback</code> 的第一個參數 <code>accumulator</code>，而 1 就是當下處理的元素。</p>
+<p>第二次執行時會把第一次執行的回傳值 1 做為 <code>accumulator</code> 傳入 <code>callback</code>，所以第二次的 function 會是：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>;
 }
-</code></pre></div><p>第三次執行則把第二次執行的回傳值 5 傳入，因此第三次的 function 會是：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span>(<span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>3</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>5</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>3</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>3</span>;
+</code></pre></div><p>第三次執行則把第二次執行的回傳值 5 傳入，因此第三次的 function 會是：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>;
 }
-</code></pre></div><p>在執行完第三次後因為沒有元素了，所以回傳最終結果 18。</p><p>除了這些以外還有很多其他的流程型 function，比方在 JavaScript 中有 <code>find</code> 傳入一個回傳值為 <code>boolean</code> 的 function 並回傳第一個符合 <code>true</code> 的元素，<code>some</code> 傳入回傳值為 <code>boolean</code> 的 function 並回傳 <code>boolean</code> 如果為 <code>true</code> 表示至少有一個元素會讓傳入 function 回傳 <code>true</code>。</p><h3 id=回傳-function>回傳 function</h3><p>上面提到的都是將 function 做為參數傳入另一個 function 中可做的應用，而應用可回傳 function 的特性我們就可以依據不同參數產生新的 function。</p><p>比方我們今天想要建立一個傳入數字 <code>a</code> 後回傳 <code>a + 3</code> 的 function，這很簡單：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>addThree</span>(<span style=color:#a6e22e>a</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>a</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>3</span>;
+</code></pre></div><p>在執行完第三次後因為沒有元素了，所以回傳最終結果 18。</p>
+<p>除了這些以外還有很多其他的流程型 function，比方在 JavaScript 中有 <code>find</code> 傳入一個回傳值為 <code>boolean</code> 的 function 並回傳第一個符合 <code>true</code> 的元素，<code>some</code> 傳入回傳值為 <code>boolean</code> 的 function 並回傳 <code>boolean</code> 如果為 <code>true</code> 表示至少有一個元素會讓傳入 function 回傳 <code>true</code>。</p>
+<h3 id="回傳-function">回傳 function</h3>
+<p>上面提到的都是將 function 做為參數傳入另一個 function 中可做的應用，而應用可回傳 function 的特性我們就可以依據不同參數產生新的 function。</p>
+<p>比方我們今天想要建立一個傳入數字 <code>a</code> 後回傳 <code>a + 3</code> 的 function，這很簡單：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addThree</span>(<span style="color:#a6e22e">a</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>;
 }
-</code></pre></div><p>然後我們想要新的加 4 的 function，這也很簡單：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>addFour</span>(<span style=color:#a6e22e>a</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>a</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>4</span>;
+</code></pre></div><p>然後我們想要新的加 4 的 function，這也很簡單：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addFour</span>(<span style="color:#a6e22e">a</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>;
 }
-</code></pre></div><p>但如果我們想要能產生 <code>a</code> 加上任意數字的 function，總不能一一去宣告，這時就可以用上這個特性：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>addNumber</span>(<span style=color:#a6e22e>b</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>a</span>) {
-        <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>a</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>b</span>;
+</code></pre></div><p>但如果我們想要能產生 <code>a</code> 加上任意數字的 function，總不能一一去宣告，這時就可以用上這個特性：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">addNumber</span>(<span style="color:#a6e22e">b</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">a</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>;
     };
 }
 
-<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>addThree</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>addNumber</span>(<span style=color:#ae81ff>3</span>);
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>addThree</span>(<span style=color:#ae81ff>4</span>)); <span style=color:#75715e>// 此行印出 7
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>addFive</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>addNumber</span>(<span style=color:#ae81ff>5</span>);
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>addFive</span>(<span style=color:#ae81ff>5</span>)); <span style=color:#75715e>// 此行印出 10
-</span></code></pre></div><p><code>addNumber(b)</code> 這個 function 所做的是將傳入的 <code>b</code> 的值綁定到要回傳的 function 內部的 <code>b</code> 中再回傳，所以 <code>addNumber(3)</code> 會得到：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>a</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>a</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>3</span>;
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">addThree</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addNumber</span>(<span style="color:#ae81ff">3</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">addThree</span>(<span style="color:#ae81ff">4</span>)); <span style="color:#75715e">// 此行印出 7
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">addFive</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">addNumber</span>(<span style="color:#ae81ff">5</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">addFive</span>(<span style="color:#ae81ff">5</span>)); <span style="color:#75715e">// 此行印出 10
+</span></code></pre></div><p><code>addNumber(b)</code> 這個 function 所做的是將傳入的 <code>b</code> 的值綁定到要回傳的 function 內部的 <code>b</code> 中再回傳，所以 <code>addNumber(3)</code> 會得到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">a</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>;
 }
-</code></pre></div><p>而 <code>addNubmer(5)</code> 則會得到：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>a</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>a</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>5</span>;
+</code></pre></div><p>而 <code>addNubmer(5)</code> 則會得到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">a</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>;
 }
-</code></pre></div><p>上述的應用稱為 <strong>Partial Application</strong> 也就是我們可以將 function 中的某些參數給予固定值來得到新的 function，新的 function 只需給予剩下的尚未給值的參數，如此我們就可以做更多抽象化來減少程式碼的重複。另一個例子，比方我們可以寫一個 function：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>url</span>(<span style=color:#a6e22e>scheme</span>, <span style=color:#a6e22e>host</span>, <span style=color:#a6e22e>path</span>) {
-    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>path</span>) {
-        <span style=color:#66d9ef>return</span> <span style=color:#a6e22e>scheme</span> <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;://&#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>host</span> <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;/&#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>path</span>;
+</code></pre></div><p>上述的應用稱為 <strong>Partial Application</strong> 也就是我們可以將 function 中的某些參數給予固定值來得到新的 function，新的 function 只需給予剩下的尚未給值的參數，如此我們就可以做更多抽象化來減少程式碼的重複。另一個例子，比方我們可以寫一個 function：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">url</span>(<span style="color:#a6e22e">scheme</span>, <span style="color:#a6e22e">host</span>, <span style="color:#a6e22e">path</span>) {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">path</span>) {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">scheme</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;://&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">host</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">path</span>;
     };
 }
-</code></pre></div><p>我們可以使用這個 function 產生 <code>function twitter(path)</code> 和 <code>function facebook(path)</code>，只要傳入 <code>path</code> 就可以得到 <code>https://www.twitter.com/{path}</code> 或 <code>https://www.facebook.com/{path}</code>：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>twitter</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>url</span>(<span style=color:#e6db74>&#34;https&#34;</span>, <span style=color:#e6db74>&#34;www.twitter.com&#34;</span>);
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>twitter</span>(<span style=color:#e6db74>&#34;user&#34;</span>)); <span style=color:#75715e>// 印出 https://www.twitter.com/user
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>let</span> <span style=color:#a6e22e>facebook</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>url</span>(<span style=color:#e6db74>&#34;https&#34;</span>, <span style=color:#e6db74>&#34;www.facebook.com&#34;</span>)
-<span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>facebook</span>(<span style=color:#e6db74>&#34;posts&#34;</span>)); <span style=color:#75715e>// 印出 https://www.facebook.com/posts
-</span></code></pre></div><p>另一個可能的簡單應用是我們可以把讀取檔案的程式和處理檔案的程式分開：</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=color:#66d9ef>function</span> <span style=color:#a6e22e>readFile</span>(<span style=color:#a6e22e>callback</span>) {
-    <span style=color:#66d9ef>let</span> <span style=color:#a6e22e>data</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>read</span>(<span style=color:#e6db74>&#34;{path}&#34;</span>) <span style=color:#75715e>// 假使 read 是讀取 path 路徑的檔案
-</span><span style=color:#75715e></span>
-    <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>function</span>(<span style=color:#a6e22e>data</span>) {
-        <span style=color:#a6e22e>callback</span>(<span style=color:#a6e22e>data</span>);
-    };
-}
+</code></pre></div><p>我們可以使用這個 function 產生 <code>function twitter(path)</code> 和 <code>function facebook(path)</code>，只要傳入 <code>path</code> 就可以得到 <code>https://www.twitter.com/{path}</code> 或 <code>https://www.facebook.com/{path}</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">twitter</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">url</span>(<span style="color:#e6db74">&#34;https&#34;</span>, <span style="color:#e6db74">&#34;www.twitter.com&#34;</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">twitter</span>(<span style="color:#e6db74">&#34;user&#34;</span>)); <span style="color:#75715e">// 印出 https://www.twitter.com/user
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">facebook</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">url</span>(<span style="color:#e6db74">&#34;https&#34;</span>, <span style="color:#e6db74">&#34;www.facebook.com&#34;</span>)
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">facebook</span>(<span style="color:#e6db74">&#34;posts&#34;</span>)); <span style="color:#75715e">// 印出 https://www.facebook.com/posts
+</span></code></pre></div><h2 id="結語">結語</h2>
+<p>上述雖然是以 JavaScript 做為例子，但主要是描述 Higer Order Function 的概念，其他語言可能語法不同，但基本概念相同，在現在大多數語言都支援多範式下，通常也支援程度不一的 Functional Programming，比方 Java 雖然是 Object Oriented Programming (物件導向語言 OOP) 但在 Java 8 後也加入了 Functional Programming 的概念讓我們不必像從前一樣任何實作邏輯都必須先宣告成 <code>class</code> 而讓我們可以寫出更簡潔同時易讀性更高更專注在實作邏輯上的程式。此篇主要是記錄我自己對 Higher Order Function 的了解和比較常運作的部分，除了此篇提到的以外還有很多 Higher Order Function 的應用，比方可以拿來做 <strong>Dependency Injection</strong> (依賴注入)，或者是實現如 <strong>Aspect Oriented Programming</strong> (剖面導向 AOP) 的設計，有機會的話再來另外記錄。</p>
 
-<span style=color:#75715e>// 如此 printFile 會在讀取檔案後印出它的內容
-</span><span style=color:#75715e></span><span style=color:#66d9ef>let</span> <span style=color:#a6e22e>printFile</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>readFile</span>((<span style=color:#a6e22e>data</span>) =&gt; {
-    <span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#a6e22e>data</span>);
-})
-</code></pre></div><p>如此一來，我們就可以重復使用讀取檔案的程式，只需要傳入不同的處理邏輯就可以得到不同的處理檔案方式。</p><h2 id=結語>結語</h2><p>上述雖然是以 JavaScript 做為例子，但主要是描述 Higer Order Function 的概念，其他語言可能語法不同，但基本概念相同，在現在大多數語言都支援多範式下，通常也支援程度不一的 Functional Programming，比方 Java 雖然是 Object Oriented Programming (物件導向語言 OOP) 但在 Java 8 後也加入了 Functional Programming 的概念讓我們不必像從前一樣任何實作邏輯都必須先宣告成 <code>class</code> 而讓我們可以寫出更簡潔同時易讀性更高更專注在實作邏輯上的程式。</p><p>此篇主要是記錄我自己對 Higher Order Function 的了解和比較常使用的部分，除了此篇提到的以外還有很多 Higher Order Function 的應用，比方可以拿來做 <strong>Dependency Injection</strong> (依賴注入)，或者是實現如 <strong>Aspect Oriented Programming</strong> (剖面導向 AOP) 的設計，有機會的話再來另外記錄。</p><hr><p>參考資料</p><ul><li><a href=https://zh.wikipedia.org/wiki/%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0>Wiki - 高階函式</a></li><li><a href=https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach>MDN forEach</a></li><li><a href=https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/map>MDN map</a></li><li><a href=https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/filter>MDN filter</a></li><li><a href=https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce>MDN reduce</a></li><li><a href=https://medium.com/javascript-scene/curry-and-function-composition-2c208d774983>Curry and Function Composition</a></li></ul><p>如果有什麼想法或需要指正的地方，歡迎您留言或來信 😄</p></div><footer><div class=stats><ul class=categories><li><a class=article-terms-link href=/categories/note/>note</a></li></ul><ul class=tags><li><a class=article-terms-link href=/tags/program/>program</a></li><li><a class=article-terms-link href=/tags/function-programming/>function programming</a></li></ul></div></footer></div><article class=post><div><h2 id=say-something>說些甚麼</h2><form id=comment-form class=new-comment method=post><h3 class="reply-notice hidden"><span class=reply-name></span></h3><input type=hidden name=options[entryId] value=c735ec19e3cc8ce97f19815bf8fbe7df>
-<input type=hidden name=fields[replyThread]>
-<input type=hidden name=fields[replyID]>
-<input type=hidden name=fields[replyName]>
-<input required name=fields[name] type=text placeholder=你的名字>
-<input name=fields[email] type=email placeholder=你的郵件>
-<textarea required name=fields[body] placeholder=你的信息 rows=10></textarea><div class=submit-notice><strong class="submit-notice-text submit-success hidden">感謝您的留言！ 審核後將會顯示在站上。</strong>
-<strong class="submit-notice-text submit-failed hidden">抱歉，部份資料輸入有問題。請確認資料填寫正確後再試一次。</strong></div><input type=submit value=送出 class=button>
-<input type=submit value=已送出 class="hidden button" disabled>
-<input type=reset value=重設 class=button></form></div><div><h2>留言</h2></div></article></article><div class=pagination><a href=/blog/linux-redirection-operators/ class="button right"><span>Linux 2、1、& 和 ></span></a></div></main><section id=site-sidebar><section id=recent-posts><header><h1>最新文章</h1></header><article class=mini-post><header><h2><a href=/blog/higher-order-function/>Higher Order Function 小記</a></h2><time class=published datetime="2021-08-14 22:33:38 +0800 +0800">August 14, 2021</time></header></article><article class=mini-post><header><h2><a href=/blog/linux-redirection-operators/>Linux 2、1、& 和 ></a></h2><time class=published datetime="2021-07-21 20:28:15 +0800 +0800">July 21, 2021</time></header></article><article class=mini-post><header><h2><a href=/blog/bitwise-operators/>Bitwise Operators</a></h2><time class=published datetime="2021-07-21 20:12:53 +0800 +0800">July 21, 2021</time></header></article><article class=mini-post><header><h2><a href=/blog/comparison-violation/>Java: Comparison method violates its general contract!</a></h2><time class=published datetime="2021-07-11 23:58:09 +0800 +0800">July 11, 2021</time></header></article><article class=mini-post><header><h2><a href=/blog/freemarker-json/>Use FreeMarker Template to Output JSON</a></h2><time class=published datetime="2021-07-06 01:28:39 +0800 +0800">July 6, 2021</time></header></article><footer><a href=/blog/ class=button>查看更多</a></footer></section><section id=categories><header><h1><a href=/categories>分類</a></h1></header><ul><li><a href=/categories/note/>note<span class=count>7</span></a><li><a href=/categories/algorithm/>algorithm<span class=count>5</span></a></li></ul></section><section id=mini-bio><header><h1>關於</h1></header><p>I'm so weak, so I learn from every master for things that I don't know</p><footer><a href=/about class=button>學到更多</a></footer></section></section><footer id=site-footer><ul class=socnet-icons><li><a href=//github.com/blackdiz target=_blank rel=noopener title=GitHub class="fab fa-github"></a></li><li><a href=mailto:blackdiz@gmail.com target=_blank title=Email class="far fa-envelope"></a></li></ul><p class=copyright>© 2021 Blackdiz's Garage<br>主題: <a href=https://themes.gohugo.io/hugo-future-imperfect-slim/ target=_blank rel=noopener>Hugo Future Imperfect Slim</a><br>移植自 <a href=https://html5up.net/future-imperfect target=_blank rel=noopener>HTML5 UP</a> | 由 <a href=https://gohugo.io/ target=_blank rel=noopener title=0.83.1>Hugo</a> 提供</p></footer><a id=back-to-top href=# class="fas fa-arrow-up fa-2x"></a><script src=/js/highlight.js></script><script>hljs.highlightAll()</script><script src=/js/bundle.min.35f126572987d033474497397ad93e095a2b5437f1c9509095557d756d3e6653.js integrity="sha256-NfEmVymH0DNHRJc5etk+CVorVDfxyVCQlVV9dW0+ZlM="></script><script src=/js/add-on.js></script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga('create','UA-79143868-1','auto'),ga('send','pageview'))</script><script async src=https://www.google-analytics.com/analytics.js></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css integrity=sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js integrity=sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js integrity=sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl crossorigin=anonymous></script><script type=text/javascript>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:!0},{left:'$',right:'$',display:!1},{left:"\\begin{align}",right:"\\end{align}",display:!0}],throwOnError:!1})})</script></div></body></html>
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/note/">note</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/program/">program</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/function-programming/">function programming</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+      <a href="/blog/pubsub-local-emulator/" class="button left"><span>PubSub Local Emulator</span></a>
+    
+    
+      <a href="/blog/two-sum/" class="button right"><span>LeetCode 1. Two Sum</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>最新文章</h1>
+      </header>
+      
+      <article class="mini-post">
+          
+        <header>
+          <h2><a href="/blog/pubsub-local-emulator/">PubSub Local Emulator</a></h2>
+          <time class="published" datetime="2021-08-26 23:38:30 &#43;0800 &#43;0800">August 26, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          
+        <header>
+          <h2><a href="/blog/higher-order-function/">Higher Order Function 小記</a></h2>
+          <time class="published" datetime="2021-08-14 22:35:07 &#43;0800 &#43;0800">August 14, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          
+        <header>
+          <h2><a href="/blog/two-sum/">LeetCode 1. Two Sum</a></h2>
+          <time class="published" datetime="2020-12-01 23:10:57 &#43;0800 &#43;0800">December 1, 2020</time>
+        </header>
+      </article>
+      
+      
+    </section>
+  
+
+  
+    
+
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">分類</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+              <a href="/categories/algorithm/">algorithm<span class="count">1</span></a>
+          
+          <li>
+              <a href="/categories/note/">note<span class="count">1</span></a>
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  
+    <section id="mini-bio">
+      <header>
+        <h1>關於</h1>
+      </header>
+      <p>I'm so weak, so I follow every masters for learning anything I don't know.</p>
+      <footer>
+        <a href="/about" class="button">學到更多</a>
+      </footer>
+    </section>
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/blackdiz" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:blackdiz@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    © 2021 Blackdiz&#39;s Garage
+      <br>
+    主題: <a href='https://themes.gohugo.io/hugo-future-imperfect-slim/' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>移植自 <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP</a> | 由 <a href='https://gohugo.io/' target='_blank' rel='noopener' title='0.87.0'>Hugo</a> 提供
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.ccb4e6bb4674f9a0e2b6ce56bb0cddea093526d4bc032314766519cdfec730b1.js" integrity="sha256-zLTmu0Z0&#43;aDits5Wuwzd6gk1JtS8AyMUdmUZzf7HMLE="></script>
+    <script src="/js/add-on.js"></script>
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script type="text/javascript">
+const delimiters = {
+    "delimiters":[
+        {left: "$$", right: "$$", display: true},
+        {left: "$", right: "$", display: false},
+    ]
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,delimiters);"></script>
+      
+    </div>
+  </body>
+</html>
