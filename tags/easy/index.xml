@@ -1,24 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>easy on Blackdiz&#39;s Garage</title>
-    <link>https://blackdiz.github.io/tags/easy/</link>
-    <description>Recent content in easy on Blackdiz&#39;s Garage</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-TW</language>
-    <lastBuildDate>Tue, 01 Dec 2020 23:10:57 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/tags/easy/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>LeetCode 1. Two Sum</title>
-      <link>https://blackdiz.github.io/blog/two-sum/</link>
-      <pubDate>Tue, 01 Dec 2020 23:10:57 +0800</pubDate>
-      
-      <guid>https://blackdiz.github.io/blog/two-sum/</guid>
-      <description>LeetCode 1. Two Sum Easy
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>easy on Blackdiz's Garage</title><link>https://blackdiz.github.io/tags/easy/</link><description>Recent content in easy on Blackdiz's Garage</description><generator>Hugo -- gohugo.io</generator><language>zh-TW</language><lastBuildDate>Sun, 27 Jun 2021 21:35:21 +0800</lastBuildDate><atom:link href="https://blackdiz.github.io/tags/easy/index.xml" rel="self" type="application/rss+xml"/><item><title>Leetcode 136. Single Number</title><link>https://blackdiz.github.io/blog/leetcode-136/</link><pubDate>Sun, 27 Jun 2021 21:35:21 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-136/</guid><description>LeetCode 136. Single Number Easy
+題目 Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+Note:
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+Example 1:
+Input: [2,2,1] Output: 1 Example 2:
+Input: [4,1,2,1,2] Output: 4 解決方法 1 (My Own Solution) 用最笨的暴力方式每次取 1 個元素和它以外的元素比對, 比到重複的就跳出該次迴圈直到找到沒重複的。 這題如果只是要求解的話很簡單，除了用巢狀回圈外，還可以遍歷陣列用 Map 記錄元素出現個次數後，再從 Map 中找出只現在一次的元素，但這些簡單的解法都不符合額外的要求，也就是必須在 $O(N)$ 的時間複雜度下不使用額外的空間，所以就不列出其他這類簡單解法了。
+Java Code class Solution { public int singleNumber(int[] nums) { int singleNumber = nums[0]; for (int i = 0; i &amp;lt; nums.</description></item><item><title>LeetCode 104. Maximum Depth of Binary Tree</title><link>https://blackdiz.github.io/blog/leetcode-104/</link><pubDate>Wed, 09 Jun 2021 01:14:14 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-104/</guid><description>LeetCode 104. Maximum Depth of Binary Tree Easy
+題目 Given a binary tree, find its maximum depth.
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+Note: A leaf is a node with no children.
+Example:
+Given binary tree [3,9,20,null,null,15,7],
+3 / \ 9 20 / \ 15 7 return its depth = 3.
+解決方法 1 (My Own Solution) 我們用 2 個變數分別記錄目前所在的層數和目前到過的最大層數，每到一層時如果目前所在的層數大於到過的最大層數就更新最大層數。</description></item><item><title>LeetCode 344. Reverse String</title><link>https://blackdiz.github.io/blog/leetcode-344/</link><pubDate>Fri, 26 Mar 2021 10:56:51 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-344/</guid><description>LeetCode 344. Reverse String Easy
+題目 Write a function that reverses a string. The input string is given as an array of characters char[].
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+You may assume all the characters consist of printable ascii characters.
+Example 1:
+Input: [&amp;quot;h&amp;quot;,&amp;quot;e&amp;quot;,&amp;quot;l&amp;quot;,&amp;quot;l&amp;quot;,&amp;quot;o&amp;quot;] Output: [&amp;quot;o&amp;quot;,&amp;quot;l&amp;quot;,&amp;quot;l&amp;quot;,&amp;quot;e&amp;quot;,&amp;quot;h&amp;quot;] Example 2:
+Input: [&amp;quot;H&amp;quot;,&amp;quot;a&amp;quot;,&amp;quot;n&amp;quot;,&amp;quot;n&amp;quot;,&amp;quot;a&amp;quot;,&amp;quot;h&amp;quot;] Output: [&amp;quot;h&amp;quot;,&amp;quot;a&amp;quot;,&amp;quot;n&amp;quot;,&amp;quot;n&amp;quot;,&amp;quot;a&amp;quot;,&amp;quot;H&amp;quot;] 解決方法1 (My Own Solution) 用兩個指標 start 和 end 分別由陣列第一個和最後一個元素開始交換位置，並且彼此慢慢靠近，因為字串長度可能為奇數或偶數，所以直到 start &amp;gt;= end 為止 (當為奇數時 start == end，當為偶數時兩者會交錯所以用 start &amp;gt; end 判斷)。</description></item><item><title>LeetCode 1. Two Sum</title><link>https://blackdiz.github.io/blog/leetcode-1/</link><pubDate>Tue, 01 Dec 2020 23:10:57 +0800</pubDate><guid>https://blackdiz.github.io/blog/leetcode-1/</guid><description>LeetCode 1. Two Sum Easy
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 Example:
-Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1]. 解決方法 1 直覺的話就是暴力解法，用所有元素組合兩兩相加直到找出加總等於 target 為止。</description>
-    </item>
-    
-  </channel>
-</rss>
+Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1]. 解決方法 1 (My Own Solution) 直覺的話就是暴力解法，用所有元素組合兩兩相加直到找出加總等於 target 為止。</description></item></channel></rss>
